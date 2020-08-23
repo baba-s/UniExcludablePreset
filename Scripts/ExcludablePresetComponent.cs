@@ -5,6 +5,7 @@ namespace Kogane
 	/// <summary>
 	/// ExcludablePreset をゲームオブジェクトに反映するためのコンポーネント
 	/// </summary>
+	[DisallowMultipleComponent]
 	public sealed class ExcludablePresetComponent : MonoBehaviour
 	{
 		//================================================================================
