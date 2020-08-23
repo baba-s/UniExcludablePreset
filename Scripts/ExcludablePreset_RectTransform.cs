@@ -15,20 +15,20 @@ namespace Kogane
 		[SerializeField][UsedImplicitly][Multiline]
 		private string m_note = string.Empty;
 
-		[SerializeField] private OverrideFloat m_posX        = new OverrideFloat( 0 );
-		[SerializeField] private OverrideFloat m_posY        = new OverrideFloat( 0 );
-		[SerializeField] private OverrideFloat m_posZ        = new OverrideFloat( 0 );
-		[SerializeField] private OverrideFloat m_width       = new OverrideFloat( 100 );
-		[SerializeField] private OverrideFloat m_height      = new OverrideFloat( 100 );
-		[SerializeField] private OverrideFloat m_anchorsMinX = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_anchorsMinY = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_anchorsMaxX = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_anchorsMaxY = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_pivotX      = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_pivotY      = new OverrideFloat( 0.5f );
-		[SerializeField] private OverrideFloat m_scaleX      = new OverrideFloat( 1 );
-		[SerializeField] private OverrideFloat m_scaleY      = new OverrideFloat( 1 );
-		[SerializeField] private OverrideFloat m_scaleZ      = new OverrideFloat( 1 );
+		[SerializeField] private OverrideFloat m_posX        = new OverrideFloat( 0 ) { IsOverride    = true };
+		[SerializeField] private OverrideFloat m_posY        = new OverrideFloat( 0 ) { IsOverride    = true };
+		[SerializeField] private OverrideFloat m_posZ        = new OverrideFloat( 0 ) { IsOverride    = true };
+		[SerializeField] private OverrideFloat m_width       = new OverrideFloat( 100 ) { IsOverride  = true };
+		[SerializeField] private OverrideFloat m_height      = new OverrideFloat( 100 ) { IsOverride  = true };
+		[SerializeField] private OverrideFloat m_anchorsMinX = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_anchorsMinY = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_anchorsMaxX = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_anchorsMaxY = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_pivotX      = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_pivotY      = new OverrideFloat( 0.5f ) { IsOverride = true };
+		[SerializeField] private OverrideFloat m_scaleX      = new OverrideFloat( 1 ) { IsOverride    = true };
+		[SerializeField] private OverrideFloat m_scaleY      = new OverrideFloat( 1 ) { IsOverride    = true };
+		[SerializeField] private OverrideFloat m_scaleZ      = new OverrideFloat( 1 ) { IsOverride    = true };
 
 		//================================================================================
 		// 関数
@@ -91,7 +91,7 @@ namespace Kogane
 				Debug.LogWarning( "RectTransform コンポーネントがアタッチされていません", gameObject );
 				return;
 			}
-			
+
 #if UNITY_EDITOR
 			if ( isUndo )
 			{

@@ -12,8 +12,8 @@ namespace Kogane
 		//================================================================================
 		// 変数(SerializeField)
 		//================================================================================
-		[SerializeField] private OverrideString m_text     = new OverrideString( string.Empty );
-		[SerializeField] private OverrideFloat  m_fontSize = new OverrideFloat( 36 );
+		[SerializeField] private OverrideString m_text     = new OverrideString( string.Empty ) { IsOverride = true };
+		[SerializeField] private OverrideFloat  m_fontSize = new OverrideFloat( 36 ) { IsOverride = true };
 
 		//================================================================================
 		// 関数

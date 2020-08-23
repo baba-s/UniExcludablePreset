@@ -12,7 +12,7 @@ namespace Kogane
 		//================================================================================
 		// 変数(SerializeField)
 		//================================================================================
-		[SerializeField] private OverrideSprite m_sourceImage = new OverrideSprite( null );
+		[SerializeField] private OverrideSprite m_sourceImage = new OverrideSprite( null ) { IsOverride = true };
 
 		//================================================================================
 		// 関数
@@ -27,7 +27,7 @@ namespace Kogane
 				Debug.LogWarning( "Image コンポーネントがアタッチされていません", gameObject );
 				return;
 			}
-			
+
 #if UNITY_EDITOR
 			if ( isUndo )
 			{
@@ -54,7 +54,7 @@ namespace Kogane
 				Debug.LogWarning( "Image コンポーネントがアタッチされていません", gameObject );
 				return;
 			}
-			
+
 #if UNITY_EDITOR
 			if ( isUndo )
 			{
