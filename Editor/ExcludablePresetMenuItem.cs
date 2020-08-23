@@ -43,9 +43,8 @@ namespace Kogane.Internal
 		private static void Save<T>( GameObject target )
 			where T : ExcludablePreset_RectTransform
 		{
-			var selectedPath = EditorUtility.SaveFilePanel( "", "", typeof( T ).Name, "asset" );
-			var relativePath = FileUtil.GetProjectRelativePath( selectedPath );
-			var path         = AssetDatabase.GenerateUniqueAssetPath( relativePath );
+			var selectedPath = EditorUtility.SaveFilePanel( "", "Assets", typeof( T ).Name, "asset" );
+			var path         = FileUtil.GetProjectRelativePath( selectedPath );
 
 			if ( string.IsNullOrWhiteSpace( path ) ) return;
 
