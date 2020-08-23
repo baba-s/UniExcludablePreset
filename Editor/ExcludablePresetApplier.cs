@@ -29,7 +29,7 @@ namespace Kogane.Internal
 		{
 			var list = scene
 					.GetRootGameObjects()
-					.Select( x => x.GetComponentInChildren<ExcludablePresetComponent>( true ) )
+					.SelectMany( x => x.GetComponentsInChildren<ExcludablePresetComponent>( true ) )
 					.Where( x => x != null )
 					.ToArray()
 				;
