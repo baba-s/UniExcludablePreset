@@ -1,5 +1,4 @@
 ﻿using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 namespace Kogane
@@ -22,40 +21,58 @@ namespace Kogane
 		/// <summary>
 		/// 指定されたオブジェクトにパラメータを反映します
 		/// </summary>
-		public override void ApplyTo( RectTransform rectTransform )
+		public override void ApplyTo( GameObject gameObject, bool isUndo = true )
 		{
-			var target = rectTransform.GetComponent<TMP_Text>();
+			if ( !gameObject.TryGetComponent<TMP_Text>( out var tmpText ) )
+			{
+				Debug.LogWarning( "TMP_Text コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
+			
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( tmpText, "Apply" );
+			}
+#endif
 
-			Undo.RecordObject( target, nameof( ApplyTo ) );
-
-			var text     = target.text;
-			var fontSize = target.fontSize;
+			var text     = tmpText.text;
+			var fontSize = tmpText.fontSize;
 
 			m_text.Override( ref text );
 			m_fontSize.Override( ref fontSize );
 
-			target.text     = text;
-			target.fontSize = fontSize;
+			tmpText.text     = text;
+			tmpText.fontSize = fontSize;
 
-			base.ApplyTo( target.rectTransform );
+			base.ApplyTo( gameObject );
 		}
 
 		/// <summary>
 		/// 指定されたオブジェクトからパラメータを読み込みます
 		/// </summary>
-		public override void ApplyFrom( RectTransform rectTransform )
+		public override void ApplyFrom( GameObject gameObject, bool isUndo = true )
 		{
-			var target = rectTransform.GetComponent<TMP_Text>();
+			if ( !gameObject.TryGetComponent<TMP_Text>( out var tmpText ) )
+			{
+				Debug.LogWarning( "TMP_Text コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
+			
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( tmpText, "Apply" );
+			}
+#endif
 
-			Undo.RecordObject( this, nameof( ApplyFrom ) );
-
-			var text     = target.text;
-			var fontSize = target.fontSize;
+			var text     = tmpText.text;
+			var fontSize = tmpText.fontSize;
 
 			m_text.Value     = text;
 			m_fontSize.Value = fontSize;
 
-			base.ApplyFrom( target.rectTransform );
+			base.ApplyFrom( gameObject );
 		}
 	}
 }

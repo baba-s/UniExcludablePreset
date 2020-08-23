@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Kogane
@@ -12,6 +12,9 @@ namespace Kogane
 		//================================================================================
 		// 変数(SerializeField)
 		//================================================================================
+		[SerializeField][UsedImplicitly][Multiline]
+		private string m_note = string.Empty;
+
 		[SerializeField] private OverrideFloat m_posX        = new OverrideFloat( 0 );
 		[SerializeField] private OverrideFloat m_posY        = new OverrideFloat( 0 );
 		[SerializeField] private OverrideFloat m_posZ        = new OverrideFloat( 0 );
@@ -33,16 +36,27 @@ namespace Kogane
 		/// <summary>
 		/// 指定されたオブジェクトにパラメータを反映します
 		/// </summary>
-		public virtual void ApplyTo( RectTransform target )
+		public virtual void ApplyTo( GameObject gameObject, bool isUndo = true )
 		{
-			Undo.RecordObject( target, nameof( ApplyTo ) );
+			if ( !gameObject.TryGetComponent<RectTransform>( out var rectTransform ) )
+			{
+				Debug.LogWarning( "RectTransform コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
 
-			var anchoredPosition3D = target.anchoredPosition3D;
-			var sizeDelta          = target.sizeDelta;
-			var anchorMin          = target.anchorMin;
-			var anchorMax          = target.anchorMax;
-			var pivot              = target.pivot;
-			var localScale         = target.localScale;
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( rectTransform, "Apply" );
+			}
+#endif
+
+			var anchoredPosition3D = rectTransform.anchoredPosition3D;
+			var sizeDelta          = rectTransform.sizeDelta;
+			var anchorMin          = rectTransform.anchorMin;
+			var anchorMax          = rectTransform.anchorMax;
+			var pivot              = rectTransform.pivot;
+			var localScale         = rectTransform.localScale;
 
 			m_posX.Override( ref anchoredPosition3D.x );
 			m_posY.Override( ref anchoredPosition3D.y );
@@ -59,27 +73,38 @@ namespace Kogane
 			m_scaleY.Override( ref localScale.y );
 			m_scaleZ.Override( ref localScale.z );
 
-			target.anchoredPosition3D = anchoredPosition3D;
-			target.sizeDelta          = sizeDelta;
-			target.anchorMin          = anchorMin;
-			target.anchorMax          = anchorMax;
-			target.pivot              = pivot;
-			target.localScale         = localScale;
+			rectTransform.anchoredPosition3D = anchoredPosition3D;
+			rectTransform.sizeDelta          = sizeDelta;
+			rectTransform.anchorMin          = anchorMin;
+			rectTransform.anchorMax          = anchorMax;
+			rectTransform.pivot              = pivot;
+			rectTransform.localScale         = localScale;
 		}
 
 		/// <summary>
 		/// 指定されたオブジェクトからパラメータを読み込みます
 		/// </summary>
-		public virtual void ApplyFrom( RectTransform target )
+		public virtual void ApplyFrom( GameObject gameObject, bool isUndo = true )
 		{
-			Undo.RecordObject( this, nameof( ApplyFrom ) );
+			if ( !gameObject.TryGetComponent<RectTransform>( out var rectTransform ) )
+			{
+				Debug.LogWarning( "RectTransform コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
+			
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( rectTransform, "Apply" );
+			}
+#endif
 
-			var anchoredPosition3D = target.anchoredPosition3D;
-			var sizeDelta          = target.sizeDelta;
-			var anchorMin          = target.anchorMin;
-			var anchorMax          = target.anchorMax;
-			var pivot              = target.pivot;
-			var localScale         = target.localScale;
+			var anchoredPosition3D = rectTransform.anchoredPosition3D;
+			var sizeDelta          = rectTransform.sizeDelta;
+			var anchorMin          = rectTransform.anchorMin;
+			var anchorMax          = rectTransform.anchorMax;
+			var pivot              = rectTransform.pivot;
+			var localScale         = rectTransform.localScale;
 
 			m_posX.Value        = anchoredPosition3D.x;
 			m_posY.Value        = anchoredPosition3D.y;

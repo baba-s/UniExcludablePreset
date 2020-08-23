@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Kogane
@@ -21,35 +20,53 @@ namespace Kogane
 		/// <summary>
 		/// 指定されたオブジェクトにパラメータを反映します
 		/// </summary>
-		public override void ApplyTo( RectTransform rectTransform )
+		public override void ApplyTo( GameObject gameObject, bool isUndo = true )
 		{
-			var target = rectTransform.GetComponent<Image>();
+			if ( !gameObject.TryGetComponent<Image>( out var image ) )
+			{
+				Debug.LogWarning( "Image コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
+			
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( image, "Apply" );
+			}
+#endif
 
-			Undo.RecordObject( target, nameof( ApplyTo ) );
-
-			var sprite = target.sprite;
+			var sprite = image.sprite;
 
 			m_sourceImage.Override( ref sprite );
 
-			target.sprite = sprite;
+			image.sprite = sprite;
 
-			base.ApplyTo( target.rectTransform );
+			base.ApplyTo( gameObject, isUndo );
 		}
 
 		/// <summary>
 		/// 指定されたオブジェクトからパラメータを読み込みます
 		/// </summary>
-		public override void ApplyFrom( RectTransform rectTransform )
+		public override void ApplyFrom( GameObject gameObject, bool isUndo = true )
 		{
-			var target = rectTransform.GetComponent<Image>();
+			if ( !gameObject.TryGetComponent<Image>( out var image ) )
+			{
+				Debug.LogWarning( "Image コンポーネントがアタッチされていません", gameObject );
+				return;
+			}
+			
+#if UNITY_EDITOR
+			if ( isUndo )
+			{
+				UnityEditor.Undo.RecordObject( image, "Apply" );
+			}
+#endif
 
-			Undo.RecordObject( this, nameof( ApplyFrom ) );
-
-			var sprite = target.sprite;
+			var sprite = image.sprite;
 
 			m_sourceImage.Value = sprite;
 
-			base.ApplyFrom( target.rectTransform );
+			base.ApplyFrom( gameObject );
 		}
 	}
 }

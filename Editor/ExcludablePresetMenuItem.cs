@@ -5,28 +5,42 @@ using UnityEngine.UI;
 
 namespace Kogane.Internal
 {
+	/// <summary>
+	/// RectTransform のコンテキストメニューから ExcludablePreset を作成できるようにするエディタ拡張
+	/// </summary>
 	internal static class ExcludablePresetMenuItem
 	{
+		//================================================================================
+		// 関数(static)
+		//================================================================================
+		/// <summary>
+		/// 選択された RectTransform を持つゲームオブジェクトの現在の設定をもとに
+		/// ExcludablePreset を作成します
+		/// </summary>
 		[MenuItem( "CONTEXT/RectTransform/Create Excludable Preset" )]
 		private static void Create( MenuCommand command )
 		{
-			var rectTransform = ( RectTransform ) command.context;
+			var transform  = ( Transform ) command.context;
+			var gameObject = transform.gameObject;
 
-			if ( rectTransform.TryGetComponent<Image>( out _ ) )
+			if ( gameObject.TryGetComponent<Image>( out _ ) )
 			{
-				Save<ExcludablePreset_Image>( rectTransform );
+				Save<ExcludablePreset_Image>( gameObject );
 			}
-			else if ( rectTransform.TryGetComponent<TMP_Text>( out _ ) )
+			else if ( gameObject.TryGetComponent<TMP_Text>( out _ ) )
 			{
-				Save<ExcludablePreset_TMP_Text>( rectTransform );
+				Save<ExcludablePreset_TMP_Text>( gameObject );
 			}
 			else
 			{
-				Save<ExcludablePreset_RectTransform>( rectTransform );
+				Save<ExcludablePreset_RectTransform>( gameObject );
 			}
 		}
 
-		private static void Save<T>( RectTransform target )
+		/// <summary>
+		/// ExcludablePreset を作成して保存します
+		/// </summary>
+		private static void Save<T>( GameObject target )
 			where T : ExcludablePreset_RectTransform
 		{
 			var selectedPath = EditorUtility.SaveFilePanel( "", "", typeof( T ).Name, "asset" );

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Kogane
 {
 	[Serializable]
-	public sealed class OverrideSprite : OverrideValueBase<Sprite>
+	internal sealed class OverrideSprite : OverrideValueBase<Sprite>
 	{
 		public OverrideSprite()
 		{
