@@ -53,6 +53,8 @@ namespace Kogane.Internal
 
 			AssetDatabase.CreateAsset( preset, path );
 			AssetDatabase.SaveAssets();
+
+			EditorGUIUtility.PingObject( preset );
 		}
 	}
 }
