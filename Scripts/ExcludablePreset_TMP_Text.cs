@@ -45,7 +45,7 @@ namespace Kogane
 			tmpText.text     = text;
 			tmpText.fontSize = fontSize;
 
-			base.ApplyTo( gameObject );
+			base.ApplyTo( gameObject, isUndo );
 		}
 
 		/// <summary>
